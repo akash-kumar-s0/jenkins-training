@@ -15,7 +15,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh "sudo docker build -t $DOCKER_IMAGE:latest ."
+                sh "docker build -t $DOCKER_IMAGE:latest ."
             }
         }
 
@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDENTIALS_ID}", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                        sh "echo $DOCKER_PASS | sudo docker login -u $DOCKER_USER --password-stdin"
+                        sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
                     }
                 }
             }
@@ -31,13 +31,13 @@ pipeline {
 
         stage('Push Docker Image to Docker Hub') {
             steps {
-                sh "sudo docker push $DOCKER_IMAGE:latest"
+                sh "docker push $DOCKER_IMAGE:latest"
             }
         }
 
         stage('Cleanup') {
             steps {
-                sh "sudo docker rmi $DOCKER_IMAGE:latest"
+                sh "docker rmi $DOCKER_IMAGE:latest"
             }
         }
     }
