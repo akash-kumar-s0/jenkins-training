@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "akashkumar/node-express"
+        DOCKER_IMAGE = "trainin123/node-express"
         DOCKER_CREDENTIALS_ID = "docker cred"
     }
 
